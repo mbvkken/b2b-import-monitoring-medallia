@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const SERVER_BASE_URL = 'http://localhost:3000'; // Adjust this to the address where your server runs
+const SERVER_BASE_URL = process.env.VERCEL_SERVER_BASE_URL | 'http://localhost:3000'; // Adjust this to the address where your server runs
 
 async function notifySlack(message) {
   try {
