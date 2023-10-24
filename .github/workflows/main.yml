@@ -3,7 +3,7 @@ name: Daily Data Extension Check
 on:
   schedule:
     - cron: '0 12 * * *' # This will run the script daily at 12 PM UTC
-
+  workflow_dispatch: # This allows you to run the workflow manually
 jobs:
   run-script:
     runs-on: ubuntu-latest
