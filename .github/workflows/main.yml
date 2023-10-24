@@ -31,3 +31,4 @@ jobs:
         MC_ACCOUNT_ID: ${{ secrets.MC_ACCOUNT_ID }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         MC_SOAP_ENDPOINT: ${{ secrets.MC_SOAP_ENDPOINT }}
+        VERCEL_SERVER_BASE_URL: ${{ secrets.VERCEL_SERVER_BASE_URL }}
