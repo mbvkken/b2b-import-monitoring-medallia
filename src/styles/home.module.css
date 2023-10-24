@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F7F7F9; /* Light background color for contrast */
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.fetchButton {
+  background-color: #570580;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.fetchButton:hover {
+  background-color: #4A006A; /* Darken button on hover */
+}
+
+.errorMessage {
+  color: #B00020;  /* Darker red color for better readability */
+  margin: 10px 0;
+  font-weight: bold; /* Making the text bold */
+  padding: 12px;  /* Increased padding */
+}
+
+.textDark {
+  color: #333; /* Dark gray color */
+  font-weight: bold; /* Making the text bold */
+  padding: 10px;  /* Increased padding */
+}
+
+.dataSection {
+  width: 100%;
+  max-width: 1200px; /* or your preferred max width */
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: auto; /* Makes the table scrollable if overflow */
+  max-height: 400px; /* adjust based on your preference */
+}
+
+.dataTable th, .dataTable td {
+  border: 1px solid #D0D0D2;
+  padding: 8px 15px;
+  text-align: left;
+}
+
+.dataTable th {
+  background-color: #570580;
+  color: #FFFFFF;
+}
+
+.dataTable td {
+  border: 1px solid #D0D0D2;
+  padding: 8px 15px;
+  text-align: left;
+  color: black; /* Set text color to black */
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #570580;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #4A006A; /* Darken button on hover */
+}
