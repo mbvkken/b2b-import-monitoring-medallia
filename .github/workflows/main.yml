@@ -1,0 +1,24 @@
+name: Daily Data Extension Check
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # This will run the script daily at 12 PM UTC
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run the checkDataExtension script
+      run: node checkDataExtension.js
