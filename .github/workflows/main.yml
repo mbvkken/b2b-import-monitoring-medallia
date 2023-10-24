@@ -22,3 +22,12 @@ jobs:
 
     - name: Run the checkDataExtension script
       run: node checkDataExtension.js
+      env:
+        MC_CLIENT_ID: ${{ secrets.MC_CLIENT_ID }}
+        MC_CLIENT_SECRET: ${{ secrets.MC_CLIENT_SECRET }}
+        MC_AUTH_URL: ${{ secrets.MC_AUTH_URL }}
+        MC_REST_URL: ${{ secrets.MC_REST_URL }}
+        MC_DE_CUSTOMER_KEY: ${{ secrets.MC_DE_CUSTOMER_KEY }}
+        MC_ACCOUNT_ID: ${{ secrets.MC_ACCOUNT_ID }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        MC_SOAP_ENDPOINT: ${{ secrets.MC_SOAP_ENDPOINT }}
