@@ -76,8 +76,8 @@ export default function Home() {
   const firstIndex = lastIndex - recordsPerPage;
   const currentRecords = data?.items?.slice(firstIndex, lastIndex);
 
-  return (
-    <div className={styles.container}>
+  /* return (
+     <div className={styles.container}>
       <button className={styles.fetchButton} onClick={fetchDataExtension}>Fetch Data Extension</button>
       
       {dataExtensionName && <p className={`${styles.textDark}`}>Data Extension Name: {dataExtensionName}</p>}
@@ -118,5 +118,12 @@ export default function Home() {
         </div>
       )}
     </div>
+  ); */
+
+  return (
+    <div>
+      Backend process running.
+    </div>
   );
+  
 }
