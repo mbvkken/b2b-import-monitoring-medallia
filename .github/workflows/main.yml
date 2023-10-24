@@ -1,0 +1,33 @@
+name: Daily Data Extension Check
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # This will run the script daily at 12 PM UTC
+  workflow_dispatch: # This allows you to run the workflow manually
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run the checkDataExtension script
+      run: node scripts/checkDataExtension.js
+      env:
+        MC_CLIENT_ID: ${{ secrets.MC_CLIENT_ID }}
+        MC_CLIENT_SECRET: ${{ secrets.MC_CLIENT_SECRET }}
+        MC_AUTH_URL: ${{ secrets.MC_AUTH_URL }}
+        MC_REST_URL: ${{ secrets.MC_REST_URL }}
+        MC_DE_CUSTOMER_KEY: ${{ secrets.MC_DE_CUSTOMER_KEY }}
+        MC_ACCOUNT_ID: ${{ secrets.MC_ACCOUNT_ID }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        MC_SOAP_ENDPOINT: ${{ secrets.MC_SOAP_ENDPOINT }}
