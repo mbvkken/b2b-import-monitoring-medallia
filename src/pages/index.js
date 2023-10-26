@@ -76,7 +76,7 @@ export default function Home() {
   const firstIndex = lastIndex - recordsPerPage;
   const currentRecords = data?.items?.slice(firstIndex, lastIndex);
 
-   /* return (
+    /* return (
      <div className={styles.container}>
       <button className={styles.fetchButton} onClick={fetchDataExtension}>Fetch Data Extension</button>
       
