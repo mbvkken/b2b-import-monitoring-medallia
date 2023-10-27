@@ -38,7 +38,6 @@ async function checkDataExtension(dataExtensionKey) {
   try {
     const response = await axios.get(`${SERVER_BASE_URL}/api/data-extensions?id=${dataExtensionKey}`);
     const fetchedData = response.data;
-    console.log('Fetched Data Extensions:', fetchedData);
 
     for (const dataExtension of fetchedData) {
       console.log(`Data Extension: ${dataExtension.name}`);

@@ -134,30 +134,40 @@
 
   .errorMessage {
     padding: 8px;
+    font-size: 0.8rem;
   }
 
   .textDark {
     padding: 8px;
+    font-size: 0.8rem;
   }
 
   .dataSection h2 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
+    font-size: 1rem;
+    margin-bottom: 10px;
     padding: 8px 0;
-    border-bottom: 1px solid #eaeaea;
   }
 
   .h1 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
+    font-size: 1.2em;
+    margin-bottom: 10px;
     padding-bottom: 8px;
   }
 
+  /* Adjust the table for mobile */
+  .dataTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
   .dataTable th, .dataTable td {
+    border: 1px solid #D0D0D2;
     padding: 5px 10px;
+    font-size: 0.9rem;
   }
 
   .pagination button {
     padding: 5px 8px;
+    font-size: 0.9rem;
   }
 }
