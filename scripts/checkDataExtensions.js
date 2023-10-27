@@ -25,13 +25,21 @@ function isValidURL(string) {
 async function checkDataExtension(dataExtensionKey) {
   try {
     const response = await axios.get(`${SERVER_BASE_URL}/api/data-extensions?id=${dataExtensionKey}`);
+    console.log('API Response:', response.data); // Log the response
+
     const fetchedData = response.data;
+
+    // Check if fetchedData is defined
+    if (!fetchedData) {
+      console.error(`API Response for Data Extension ${dataExtensionKey} is undefined.`);
+      return;
+    }
 
     // Check the total number of records
     if (fetchedData.items.length < 100) {
       const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
       const message = `On the latest import, the Data Extension "${fetchedData.name}" has ${fetchedData.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio> `;
-      await notifySlack(message);
+      notifySlack(message);
     }
 
     // Check if survey_url is valid for each item
@@ -43,7 +51,7 @@ async function checkDataExtension(dataExtensionKey) {
     }
     if (invalidURLs > 0) {
       const message = `${invalidURLs} or more invalid URLs detected in "${fetchedData.name}"`;
-      await notifySlack(message);
+      notifySlack(message);
     }
 
   } catch (err) {
