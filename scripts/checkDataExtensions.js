@@ -5,12 +5,11 @@ const DATA_EXTENSION_KEYS = process.env.MC_DE_KEYS ? process.env.MC_DE_KEYS.spli
 
 async function notifySlack(message) {
   try {
-    const response = await axios.post(`${SERVER_BASE_URL}/api/sendToSlack`, {
+    await axios.post(`${SERVER_BASE_URL}/api/sendToSlack`, {
       text: message
     });
-    console.log('Slack notification sent:', response.data);
   } catch (error) {
-    console.error('Failed to send Slack notification:', error.response ? error.response.data : error.message);
+    console.error('Failed to send Slack notification:', error);
   }
 }
 
@@ -23,44 +22,39 @@ function isValidURL(string) {
   }
 }
 
-async function checkDataExtensions(dataExtensionKeys) {
-  if (dataExtensionKeys.length === 0) {
-    console.log('No Data Extension keys provided');
-    return;
-  }
+async function checkDataExtension(dataExtensionKey) {
+  try {
+    const response = await axios.get(`${SERVER_BASE_URL}/api/data-extensions?id=${dataExtensionKey}`);
+    const fetchedData = response.data;
 
-  for (const deKey of dataExtensionKeys) {
-    try {
-      const response = await axios.get(`${SERVER_BASE_URL}/api/data-extensions`, { params: { id: deKey } });
-      const fetchedData = response.data;
-
-      if (!fetchedData || !fetchedData.items || !Array.isArray(fetchedData.items)) {
-        console.error('Invalid response format for Data Extension', deKey);
-        continue;
-      }
-
-      // Check the total number of records
-      if (fetchedData.items.length < 100) {
-        const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-        const message = `On latest import the Data Extension "${fetchedData.name}" has ${fetchedData.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio>`;
-        await notifySlack(message);
-      }
-
-      // Check if survey_url is valid for each item
-      let invalidURLs = 0;
-      for (const item of fetchedData.items) {
-        if (!isValidURL(item.values.survey_url)) {
-          invalidURLs++;
-        }
-      }
-      if (invalidURLs > 0) {
-        const message = `${invalidURLs} or more invalid URLs detected in "${fetchedData.name}"`;
-        await notifySlack(message);
-      }
-
-    } catch (err) {
-      console.error('Error occurred while processing Data Extension', deKey, ':', err.response ? err.response.data : err.message);
+    // Check the total number of records
+    if (fetchedData.items.length < 100) {
+      const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
+      const message = `On the latest import, the Data Extension "${fetchedData.name}" has ${fetchedData.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio> `;
+      notifySlack(message);
     }
+
+    // Check if survey_url is valid for each item
+    let invalidURLs = 0;
+    for (const item of fetchedData.items) {
+      if (!isValidURL(item.values.survey_url)) {
+        invalidURLs++;
+      }
+    }
+    if (invalidURLs > 0) {
+      const message = `${invalidURLs} or more invalid URLs detected in "${fetchedData.name}"`;
+      notifySlack(message);
+    }
+
+  } catch (err) {
+    console.error(`Error occurred while processing Data Extension ${dataExtensionKey}:`, err.message);
+  }
+}
+
+// Loop through the array of DATA_EXTENSION_KEYS and check each data extension
+async function checkDataExtensions(dataExtensionKeys) {
+  for (const deKey of dataExtensionKeys) {
+    await checkDataExtension(deKey);
   }
 }
 
