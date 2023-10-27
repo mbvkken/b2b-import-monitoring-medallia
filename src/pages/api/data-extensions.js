@@ -11,11 +11,14 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'No Data Extension keys found in environment variables' });
       }
 
-      // Fetch Data Extension details
+      // Fetch Data Extension details using the getBulkDataExtensionDetails function
       const dataExtensions = await getBulkDataExtensionDetails(deKeys);
-      if (!dataExtensions) {
+      
+      // Check if dataExtensions is empty or null
+      if (!dataExtensions || dataExtensions.length === 0) {
         return res.status(500).json({ error: 'Failed to fetch data extensions' });
       }
+      
       return res.status(200).json(dataExtensions);
     } catch (error) {
       console.error('API Error:', error);
