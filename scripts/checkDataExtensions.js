@@ -34,7 +34,7 @@ async function checkDataExtension(dataExtensionKey) {
       console.log(`Data Extension: ${dataExtension.name}`);
 
       // Check the total number of records for this data extension
-      if (dataExtension.items.length < 100) {
+      if (fetchedData.name === 'medallia_rnps_end_user_import_url' && fetchedData.items.length < 1001) {
         const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
         const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
         const message = `Check status <${vercelURL}|here>: On the latest import, the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio>`;
