@@ -2,25 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../styles/home.module.css';
 
-const sentNotifications = new Set();
-
-async function notifySlack(message, dataExtensionName) {
-  const notificationKey = `${dataExtensionName}:${message}`;
-
-  if (sentNotifications.has(notificationKey)) {
-    console.log('Notification already sent:', message);
-    return;
-  }
-
-  try {
-    await axios.post('/api/sendToSlack', { text: message });
-    console.log('Slack notification sent:', message);
-    sentNotifications.add(notificationKey);
-  } catch (error) {
-    console.error('Failed to send Slack notification:', error);
-  }
-}
-
 function isValidURL(string) {
   try {
     new URL(string);
@@ -49,21 +30,7 @@ export default function Home() {
         fetchedData.forEach((dataExtension) => {
           const deKey = dataExtension.key;
           console.log(`Data Extension: ${dataExtension.name}`, dataExtension);
-
-          if (dataExtension.name === 'medallia_rnps_end_user_import_url' && dataExtension.items.length < 1001) {
-            const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-            const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
-            const message = `Check status <${vercelURL}|here>: On latest import the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected 1000 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio>`;
-            notifySlack(message, dataExtension.name);
-          }
-
-          const invalidURLs = dataExtension.items.filter(item => !isValidURL(item.values.survey_url)).length;
-          if (invalidURLs > 0) {
-            const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
-            const message = `Check status <${vercelURL}|here>: ${invalidURLs} or more invalid URLs detected in "${dataExtension.name}"`;
-            notifySlack(message, dataExtension.name);
-          }
-
+          
           deData[deKey] = { ...dataExtension, items: dataExtension.items.map(item => item.values) };
         });
 
