@@ -35,7 +35,7 @@ function isValidURL(string) {
 async function checkDataExtensions(dataExtensionKeys) {
   for (const deKey of dataExtensionKeys) {
     try {
-      const response = await axios.get(`${SERVER_BASE_URL}/api/data-extension?id=${deKey}`);
+      const response = await axios.get(`${SERVER_BASE_URL}/api/data-extensions?id=${deKey}`);
       const fetchedData = response.data;
 
       if (!fetchedData || !fetchedData.items) {
