@@ -1,8 +1,9 @@
+/* Default styles for larger screens */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F7F7F9; /* Light background color for contrast */
+  background-color: #F7F7F9;
   min-height: 100vh;
   padding: 20px;
 }
@@ -19,26 +20,26 @@
 }
 
 .fetchButton:hover {
-  background-color: #4A006A; /* Darken button on hover */
+  background-color: #4A006A;
 }
 
 .errorMessage {
-  color: #B00020;  /* Darker red color for better readability */
+  color: #B00020;
   margin: 10px 0;
-  font-weight: bold; /* Making the text bold */
-  padding: 12px;  /* Increased padding */
+  font-weight: bold;
+  padding: 12px;
 }
 
 .textDark {
-  color: #333; /* Dark gray color */
-  font-weight: bold; /* Making the text bold */
-  padding: 10px;  /* Increased padding */
+  color: #333;
+  font-weight: bold;
+  padding: 10px;
 }
 
 .dataSection {
   width: 100%;
-  max-width: 1200px; /* or your preferred max width */
-  margin-bottom: 20px; /* Added bottom margin */
+  max-width: 1200px;
+  margin-bottom: 20px;
 }
 
 .dataSection h2 {
@@ -67,7 +68,7 @@
 .dataTable {
   width: 100%;
   border-collapse: collapse;
-  overflow-x: auto; /* Makes the table scrollable if overflow */
+  overflow-x: auto;
 }
 
 .dataTable th, .dataTable td {
@@ -82,7 +83,7 @@
 }
 
 .dataTable td {
-  color: #333; /* Dark gray for better readability */
+  color: #333;
 }
 
 .pagination {
@@ -103,7 +104,7 @@
 }
 
 .pagination button:hover {
-  background-color: #4A006A; /* Darken button on hover */
+  background-color: #4A006A;
 }
 
 .loadingSpinner {
@@ -118,4 +119,45 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .fetchButton {
+    padding: 8px 15px;
+    margin-bottom: 10px;
+  }
+
+  .errorMessage {
+    padding: 8px;
+  }
+
+  .textDark {
+    padding: 8px;
+  }
+
+  .dataSection h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .h1 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+  }
+
+  .dataTable th, .dataTable td {
+    padding: 5px 10px;
+  }
+
+  .pagination button {
+    padding: 5px 8px;
+  }
 }
