@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run the checkDataExtension script
+    - name: Run the checkDataExtensions script
       run: node scripts/checkDataExtensions.js
       env:
         MC_CLIENT_ID: ${{ secrets.MC_CLIENT_ID }}
