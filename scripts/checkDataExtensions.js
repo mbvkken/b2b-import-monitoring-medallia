@@ -31,7 +31,7 @@ async function checkDataExtension(dataExtensionKey) {
     if (fetchedData.items.length < 100) {
       const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
       const message = `On the latest import, the Data Extension "${fetchedData.name}" has ${fetchedData.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio> `;
-      notifySlack(message);
+      await notifySlack(message);
     }
 
     // Check if survey_url is valid for each item
@@ -43,7 +43,7 @@ async function checkDataExtension(dataExtensionKey) {
     }
     if (invalidURLs > 0) {
       const message = `${invalidURLs} or more invalid URLs detected in "${fetchedData.name}"`;
-      notifySlack(message);
+      await notifySlack(message);
     }
 
   } catch (err) {
@@ -60,4 +60,3 @@ async function checkDataExtensions(dataExtensionKeys) {
 
 // Invoke the function to check the data extensions
 checkDataExtensions(DATA_EXTENSION_KEYS);
-
