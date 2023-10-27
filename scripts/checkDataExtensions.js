@@ -3,11 +3,13 @@ const axios = require('axios');
 const SERVER_BASE_URL = process.env.VERCEL_SERVER_BASE_URL || 'http://localhost:3000'; // Adjust this to the address where your server runs
 const DATA_EXTENSION_KEYS = process.env.MC_DE_KEYS ? process.env.MC_DE_KEYS.split(',') : [];
 
-async function notifySlack(message) {
+async function notifySlack(message, dataExtensionName) {
   try {
     await axios.post(`${SERVER_BASE_URL}/api/sendToSlack`, {
-      text: message
+      text: message,
+      dataExtensionName: dataExtensionName, // Include dataExtensionName in the payload
     });
+    console.log('Slack notification sent:', message);
   } catch (error) {
     console.error('Failed to send Slack notification:', error);
   }
@@ -25,21 +27,15 @@ function isValidURL(string) {
 async function checkDataExtension(dataExtensionKey) {
   try {
     const response = await axios.get(`${SERVER_BASE_URL}/api/data-extensions?id=${dataExtensionKey}`);
-    console.log('API Response:', response.data); // Log the response
-
     const fetchedData = response.data;
-
-    // Check if fetchedData is defined and has the 'items' property
-    if (!fetchedData || !fetchedData.items) {
-      console.error(`API Response for Data Extension ${dataExtensionKey} is missing 'items' property.`);
-      return;
-    }
+    console.log(response.data);
 
     // Check the total number of records
     if (fetchedData.items.length < 100) {
       const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-      const message = `On the latest import, the Data Extension "${fetchedData.name}" has ${fetchedData.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio> `;
-      notifySlack(message);
+      const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
+      const message = `Check status <${vercelURL}|here>: On the latest import, the Data Extension "${fetchedData.name}" has ${fetchedData.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio>`;
+      notifySlack(message, fetchedData.name); // Pass dataExtensionName to notifySlack function
     }
 
     // Check if survey_url is valid for each item
@@ -50,15 +46,15 @@ async function checkDataExtension(dataExtensionKey) {
       }
     }
     if (invalidURLs > 0) {
-      const message = `${invalidURLs} or more invalid URLs detected in "${fetchedData.name}"`;
-      notifySlack(message);
+      const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
+      const message = `Check status <${vercelURL}|here>: ${invalidURLs} or more invalid URLs detected in "${fetchedData.name}"`;
+      notifySlack(message, fetchedData.name); // Pass dataExtensionName to notifySlack function
     }
 
   } catch (err) {
     console.error(`Error occurred while processing Data Extension ${dataExtensionKey}:`, err.message);
   }
 }
-
 
 // Loop through the array of DATA_EXTENSION_KEYS and check each data extension
 async function checkDataExtensions(dataExtensionKeys) {
