@@ -21,7 +21,7 @@ jobs:
       run: npm install
 
     - name: Run the checkDataExtensions script
-      run: node scripts/checkDataExtensions.js
+      run: node scripts/checkDataExtension.js
       env:
         MC_CLIENT_ID: ${{ secrets.MC_CLIENT_ID }}
         MC_CLIENT_SECRET: ${{ secrets.MC_CLIENT_SECRET }}
