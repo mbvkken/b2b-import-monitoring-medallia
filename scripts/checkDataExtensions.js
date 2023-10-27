@@ -55,4 +55,3 @@ async function checkDataExtensions(dataExtensionKeys) {
 
 // Invoke the function to check the data extensions
 checkDataExtensions(DATA_EXTENSION_KEYS);
-
