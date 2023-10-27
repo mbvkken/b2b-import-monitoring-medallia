@@ -29,9 +29,9 @@ async function checkDataExtension(dataExtensionKey) {
 
     const fetchedData = response.data;
 
-    // Check if fetchedData is defined
-    if (!fetchedData) {
-      console.error(`API Response for Data Extension ${dataExtensionKey} is undefined.`);
+    // Check if fetchedData is defined and has the 'items' property
+    if (!fetchedData || !fetchedData.items) {
+      console.error(`API Response for Data Extension ${dataExtensionKey} is missing 'items' property.`);
       return;
     }
 
@@ -58,6 +58,7 @@ async function checkDataExtension(dataExtensionKey) {
     console.error(`Error occurred while processing Data Extension ${dataExtensionKey}:`, err.message);
   }
 }
+
 
 // Loop through the array of DATA_EXTENSION_KEYS and check each data extension
 async function checkDataExtensions(dataExtensionKeys) {
