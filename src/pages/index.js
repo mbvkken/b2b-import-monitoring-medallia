@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../styles/home.module.css';
 
-async function notifySlack(message) {
+const sentNotifications = new Set();
+
+async function notifySlack(message, dataExtensionName) {
+  const notificationKey = `${dataExtensionName}:${message}`;
+
+  if (sentNotifications.has(notificationKey)) {
+    console.log('Notification already sent:', message);
+    return;
+  }
+
   try {
-    await axios.post('/api/sendToSlack', {
-      text: message
-    });
+    await axios.post('/api/sendToSlack', { text: message });
+    console.log('Slack notification sent:', message);
+    sentNotifications.add(notificationKey);
   } catch (error) {
     console.error('Failed to send Slack notification:', error);
   }
@@ -22,109 +31,92 @@ function isValidURL(string) {
 }
 
 export default function Home() {
-  const [data, setData] = useState(null);
-  const [dataExtensionName, setDataExtensionName] = useState("");
+  const [dataExtensions, setDataExtensions] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 50;
 
-  async function fetchDataExtension() {
-    // Reset states
-    setData(null);
-    setDataExtensionName("");
-    setError(null);
-    setLoading(true);
-  
-    try {
-      const response = await axios.get('/api/data-extension?id=YOUR_DATA_EXTENSION_ID');
-      const fetchedData = response.data;
+  useEffect(() => {
+    const fetchDataExtensions = async () => {
+      setLoading(true);
+      setError(null);
 
-      // Set the Data Extension Name
-      setDataExtensionName(fetchedData.name);
-  
-      // Check the total number of records
-      if (fetchedData.items.length < 100) {
-        const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-        const message = `On latest import the Data Extension "${fetchedData.name}" has ${fetchedData.items.length} records which is less than the expected 100 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio> `;
-        setError(message);
-        notifySlack(message);
+      try {
+        const response = await axios.get('/api/data-extensions');
+        const fetchedData = response.data;
+        console.log('Fetched Data Extensions:', fetchedData);
+
+        const deData = {};
+        fetchedData.forEach((dataExtension) => {
+          const deKey = dataExtension.key;
+          console.log(`Data Extension: ${dataExtension.name}`, dataExtension);
+
+          if (dataExtension.name === 'medallia_rnps_end_user_import_url' && dataExtension.items.length < 1000) {
+            const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
+            const message = `On latest import the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected 1000 records. This could be correct, but maybe worth checking out? Head over to <${adminPanelURL}|Automation Studio>`;
+            notifySlack(message, dataExtension.name);
+          }
+
+          const invalidURLs = dataExtension.items.filter(item => !isValidURL(item.values.survey_url)).length;
+          if (invalidURLs > 0) {
+            const message = `${invalidURLs} or more invalid URLs detected in "${dataExtension.name}"`;
+            notifySlack(message, dataExtension.name);
+          }
+
+          deData[deKey] = { ...dataExtension, items: dataExtension.items.map(item => item.values) };
+        });
+
+        console.log('Structured Data Extensions:', deData);
+        setDataExtensions(deData);
+      } catch (err) {
+        console.error('Failed to fetch data extensions:', err);
+        setError('Failed to fetch data extensions');
+      } finally {
+        setLoading(false);
       }
-  
-      // Check if survey_url is valid for each item
-      let invalidURLs = 0;
-      for (const item of fetchedData.items) {
-        if (!isValidURL(item.values.survey_url)) {
-          invalidURLs++;
-        }
-      }
-      if (invalidURLs > 0) {
-        const message = `${invalidURLs} or more invalid URLs detected in "${fetchedData.name}"`;
-        setError(message);
-        notifySlack(message);
-      }
-  
-      setData(fetchedData);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
+    };
+
+    fetchDataExtensions();
+  }, []);
+
+  const renderStatus = (data) => {
+    const invalidURLs = data.items.filter(item => !isValidURL(item.survey_url)).length;
+    if (invalidURLs > 0) {
+      return <span style={{ color: 'red' }}>❌ Invalid URLs Detected</span>;
     }
-  }
+    return <span style={{ color: 'green' }}>✅ All URLs Valid</span>;
+  };
 
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const currentRecords = data?.items?.slice(firstIndex, lastIndex);
-
-    /* return (
-     <div className={styles.container}>
-      <button className={styles.fetchButton} onClick={fetchDataExtension}>Fetch Data Extension</button>
-      
-      {dataExtensionName && <p className={`${styles.textDark}`}>Data Extension Name: {dataExtensionName}</p>}
-      {loading && <p>Loading...</p>}
-      {error && <p className={`${styles.errorMessage} ${styles.textDark}`}>Error occurred: {error}</p>}
-      
-      {currentRecords && (
-        <div className={styles.dataSection}>
-          <table className={styles.dataTable}>
-            <thead>
-              <tr>
-                <th>Contact ID</th>
-                <th>Survey ID</th>
-                <th>Survey URL</th>
-                <th>Created Date</th>
-                <th>Email</th>
-                <th>Mobile Phone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentRecords.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.values.contact_id}</td>
-                  <td>{item.values.surveyid}</td>
-                  <td>{item.values.survey_url}</td>
-                  <td>{item.values.created_on}</td>
-                  <td>{item.values.email}</td>
-                  <td>{item.values.mobile_phone}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className={styles.pagination}>
-            <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>Previous</button>
-            <span>Page {currentPage}</span>
-            <button onClick={() => setCurrentPage(prev => prev + 1)}>Next</button>
-          </div>
-        </div>
-      )}
-    </div>
-  ); */
-
-  
   return (
-    <div>
-      Backend process running.
+    <div className={styles.container}>
+      <h1 className={styles.h1}>Medallia Import Monitoring</h1>
+      {loading && <div className={styles.loadingSpinner}>Loading...</div>}
+      {error && <p className={styles.errorMessage}>Error: {error}</p>}
+      <div className={styles.tableContainer}>
+        <table className={styles.dataTable}>
+          <thead>
+            <tr>
+              <th>Data Extension Name</th>
+              <th>Number of Records</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.values(dataExtensions).length > 0 ? (
+              Object.values(dataExtensions).map((data) => (
+                <tr key={data.key}>
+                  <td>{data.name}</td>
+                  <td>{data.items.length}</td>
+                  <td>{renderStatus(data)}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">No Data Extensions Available</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-  
 }

@@ -38,13 +38,36 @@
 .dataSection {
   width: 100%;
   max-width: 1200px; /* or your preferred max width */
+  margin-bottom: 20px; /* Added bottom margin */
+}
+
+.dataSection h2 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #333;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #eaeaea;
+}
+
+.h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #666;
+  padding-bottom: 10px;
+  display: inline-block;
 }
 
 .dataTable {
   width: 100%;
   border-collapse: collapse;
-  overflow: auto; /* Makes the table scrollable if overflow */
-  max-height: 400px; /* adjust based on your preference */
+  overflow-x: auto; /* Makes the table scrollable if overflow */
 }
 
 .dataTable th, .dataTable td {
@@ -59,10 +82,7 @@
 }
 
 .dataTable td {
-  border: 1px solid #D0D0D2;
-  padding: 8px 15px;
-  text-align: left;
-  color: black; /* Set text color to black */
+  color: #333; /* Dark gray for better readability */
 }
 
 .pagination {
@@ -84,4 +104,18 @@
 
 .pagination button:hover {
   background-color: #4A006A; /* Darken button on hover */
+}
+
+.loadingSpinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #570580;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
