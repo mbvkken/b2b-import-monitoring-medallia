@@ -6,6 +6,15 @@
   background-color: #F7F7F9;
   min-height: 100vh;
   padding: 20px;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.body {
+  font-family: 'Roboto', Arial, sans-serif;
 }
 
 .fetchButton {
@@ -17,6 +26,7 @@
   cursor: pointer;
   margin-bottom: 20px;
   transition: background-color 0.3s ease;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .fetchButton:hover {
@@ -28,50 +38,60 @@
   margin: 10px 0;
   font-weight: bold;
   padding: 12px;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .textDark {
-  color: #333;
-  font-weight: bold;
+  color: #570580; /* Match the header color */
+  font-weight: bold; /* Make it bold */
   padding: 10px;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .dataSection {
   width: 100%;
   max-width: 1200px;
   margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .dataSection h2 {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: #333;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  text-align: center;
-  border-bottom: 2px solid #eaeaea;
+  font-size: 1.2rem; /* Increase font size */
+  font-weight: bold; /* Make it bold */
+  color: #570580; /* Match the header color */
+  text-align: left; /* Align text to the left */
+  margin-bottom: 10px;
+  padding-left: 10px; /* Add left padding */
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .h1 {
   font-size: 2em;
   font-weight: bold;
-  color: #333;
+  color: #570580; /* Update the color to #570580 */
   margin-bottom: 20px;
   text-align: center;
-  border-bottom: 2px solid #666;
+  border-bottom: 2px solid #570580; /* Match the color to the header color */
   padding-bottom: 10px;
   display: inline-block;
+  text-transform: uppercase; /* Convert text to uppercase */
+  letter-spacing: 2px; /* Add letter spacing for a modern look */
+  background-color: #F7F7F9; /* Add a background color */
+  padding: 10px 20px; /* Add padding to the header */
+  border-radius: 5px; /* Add rounded corners */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .dataTable {
   width: 100%;
   border-collapse: collapse;
   overflow-x: auto;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
-.dataTable th, .dataTable td {
+.dataTable th,
+.dataTable td {
   border: 1px solid #D0D0D2;
   padding: 8px 15px;
   text-align: left;
@@ -91,16 +111,18 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .pagination button {
-  background-color: #570580;
+  background-color: #570580; /* Example: Change button background color */
   color: #FFFFFF;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
+  border-radius: 5px; /* Add rounded corners */
+  padding: 8px 15px; /* Increase padding */
+  margin: 5px; /* Add margin */
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 .pagination button:hover {
@@ -114,11 +136,17 @@
   width: 40px;
   height: 40px;
   animation: spin 2s linear infinite;
+  margin: 10px; /* Add margin */
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Mobile styles */
@@ -134,18 +162,28 @@
 
   .errorMessage {
     padding: 8px;
-    font-size: 0.8rem;
+    font-size: 1rem; /* Example: Increase font size */
+    font-weight: bold; /* Make it bold */
+    text-align: left; /* Align text to the left */
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font */
   }
 
   .textDark {
-    padding: 8px;
-    font-size: 0.8rem;
+    padding: 10px;
+    font-size: 1rem; /* Example: Increase font size */
+    font-weight: bold; /* Make it bold */
+    color: #570580; /* Match the header color */
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font */
   }
 
   .dataSection h2 {
-    font-size: 1rem;
+    font-size: 1.2rem; /* Increase font size */
+    font-weight: bold; /* Make it bold */
+    color: #570580; /* Match the header color */
+    text-align: left; /* Align text to the left */
     margin-bottom: 10px;
-    padding: 8px 0;
+    padding-left: 10px; /* Add left padding */
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font */
   }
 
   .h1 {
@@ -160,14 +198,29 @@
     border-collapse: collapse;
   }
 
-  .dataTable th, .dataTable td {
+  .dataTable th,
+  .dataTable td {
     border: 1px solid #D0D0D2;
     padding: 5px 10px;
     font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .pagination button {
     padding: 5px 8px;
     font-size: 0.9rem;
+  }
+  
+  /* Additional mobile styling for the table if needed */
+  .dataTable th {
+    background-color: #570580; /* Example: Change header background color */
+    color: #FFFFFF;
+  }
+  
+  .dataTable td {
+    color: #333;
+    /* Additional mobile styles for table cells */
   }
 }

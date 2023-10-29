@@ -30,7 +30,7 @@ export default function Home() {
         fetchedData.forEach((dataExtension) => {
           const deKey = dataExtension.key;
           console.log(`Data Extension: ${dataExtension.name}`, dataExtension);
-          
+
           deData[deKey] = { ...dataExtension, items: dataExtension.items.map(item => item.values) };
         });
 
@@ -64,23 +64,25 @@ export default function Home() {
         <table className={styles.dataTable}>
           <thead>
             <tr>
-              <th>Data Extension Name</th>
-              <th>Number of Records</th>
-              <th>Status</th>
+              <th>Data Extension</th>
             </tr>
           </thead>
           <tbody>
             {Object.values(dataExtensions).length > 0 ? (
               Object.values(dataExtensions).map((data) => (
                 <tr key={data.key}>
-                  <td>{data.name}</td>
-                  <td>{data.items.length}</td>
-                  <td>{renderStatus(data)}</td>
+                  <td>
+                    <div className={styles.dataExtension}>
+                      <div className={styles.bold}>{data.name}</div>
+                      <div>{data.items.length} Record(s)</div>
+                      <div>{renderStatus(data)}</div>
+                    </div>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="3">No Data Extensions Available</td>
+                <td>No Data Extensions Available</td>
               </tr>
             )}
           </tbody>
