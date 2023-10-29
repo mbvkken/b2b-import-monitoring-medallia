@@ -53,8 +53,9 @@ async function checkDataExtension(dataExtensionKey) {
       // Check if survey_url is valid for each item in this data extension
       for (const item of dataExtension.items) {
         if (!isValidURL(item.values.survey_url)) {
+          const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
           const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
-          const message = `Check status <${vercelURL}|here>: Invalid URL detected in "${dataExtension.name}": ${item.values.survey_url}`;
+          const message = `Check status <${vercelURL}|here>: Invalid URL detected in "${dataExtension.name}": ${item.values.survey_url}. Head over to <${adminPanelURL}|Automation Studio>`;
           notifySlack(message, dataExtension.name);
         }
       }
