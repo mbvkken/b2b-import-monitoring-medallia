@@ -2,6 +2,7 @@ const axios = require('axios');
 
 const SERVER_BASE_URL = process.env.VERCEL_SERVER_BASE_URL || 'http://localhost:3000'; // Adjust this to the address where your server runs
 const DATA_EXTENSION_KEYS = process.env.MC_DE_KEYS ? process.env.MC_DE_KEYS.split(',') : [];
+const VERCEL_URL = process.env.VERCEL_SERVER_BASE_URL;
 
 const sentNotifications = new Set(); // Create a Set to store sent notifications
 
@@ -45,7 +46,7 @@ async function checkDataExtension(dataExtensionKey) {
       // Check the total number of records for this data extension
       if (dataExtension.items.length < 1000 && dataExtension.name === 'medallia_rnps_end_user_import_url') {
         const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-        const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
+        const vercelURL = VERCEL_URL;
         const message = `On the latest import, the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected 1000 records. This could be correct, but maybe worth checking out? Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be`;
         notifySlack(message, dataExtension.name);
       }
@@ -54,7 +55,7 @@ async function checkDataExtension(dataExtensionKey) {
       for (const item of dataExtension.items) {
         if (!isValidURL(item.values.survey_url)) {
           const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-          const vercelURL = 'https://sfmc-app-monitoring.vercel.app/';
+          const vercelURL = VERCEL_URL;
           const message = `Invalid URL detected in "${dataExtension.name}". Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be`;
           notifySlack(message, dataExtension.name);
         }
