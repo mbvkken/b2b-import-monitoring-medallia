@@ -69,11 +69,11 @@ export default function Home() {
           </thead>
           <tbody>
             {Object.values(dataExtensions).length > 0 ? (
-              Object.values(dataExtensions).map((data) => (
+              Object.values(dataExtensions).map((data, index) => (
                 <tr key={data.key}>
                   <td>
                     <div className={styles.dataExtension}>
-                      <div className={styles.bold}>{data.name}</div>
+                      <div className={styles.bold}>{index + 1}. {data.name}</div>
                       <div>{data.items.length} Record(s)</div>
                       <div>{renderStatus(data)}</div>
                     </div>
