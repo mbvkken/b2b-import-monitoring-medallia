@@ -1,5 +1,9 @@
 B2B SFMC Medallia Import Monitoring
 
+This solution has been created using SFMC's REST API to fetch data extensions details in order to check for valid URLs / amounts of records etc. 
+
+The solution can be developed further if needed.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
