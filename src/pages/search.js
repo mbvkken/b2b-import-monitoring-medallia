@@ -78,7 +78,9 @@ const Search = () => {
           Sort by Created Date: {sortByCreatedDate ? 'Latest' : 'Earliest'}
         </button>
       </div>
-      {loading && <div className={styles.loading}>Loading...</div>}
+      {loading && (
+        <div className={styles.loadingSpinner}>Loading...</div>
+      )}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
       <ul className={styles.results}>
         {filteredJourneys.length > 0 ? (
