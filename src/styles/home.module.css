@@ -140,6 +140,7 @@
   animation: spin 2s linear infinite;
   margin: 10px; /* Add margin */
   font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+  color: #570580;
 }
 
 @keyframes spin {

@@ -1,0 +1,172 @@
+/* Default styles for larger screens */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F7F7F9;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .h1 {
+    font-size: 2em;
+    font-weight: bold;
+    color: #F7F7F9;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 2px solid #570580;
+    padding-bottom: 10px;
+    display: inline-block;
+    letter-spacing: 2px;
+    background-color: #570580;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .inputContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .searchInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+  }
+  
+  .searchButton {
+    background-color: #570580;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .searchButton:hover {
+    background-color: #4A006A;
+  }
+  
+  .loading {
+    color: #570580;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .errorMessage {
+    color: #B00020;
+    margin: 10px 0;
+    font-weight: bold;
+    padding: 12px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .results {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .resultsItem {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    color: #333;
+  }
+  
+  /* Style the journey details differently */
+  .resultsItem strong {
+    color: #570580;
+  }
+  
+  .journeyName {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .journeyDetails {
+    margin-top: 5px;
+    color: #333;
+  }
+
+.sortButtonContainer {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sortButton {
+  background-color: #570580;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+.sortButton:hover {
+  background-color: #4A006A;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  /* Mobile-specific styles go here */
+
+  .h1 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+
+  .inputContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .searchInput {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .searchButton {
+    width: 100%;
+  }
+
+  .resultsItem {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  .journeyName {
+    font-weight: bold;
+  }
+
+  .journeyDetails {
+    margin-top: 5px;
+  }
+
+  .sortButtonContainer {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .sortButton {
+    width: 100%;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+  

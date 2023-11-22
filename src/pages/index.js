@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../styles/home.module.css';
+import Header from '../components/Header';
 
 function isValidURL(string) {
   try {
@@ -57,7 +58,8 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>Medallia Import Monitoring</h1>
+      <Header />
+      <h1 className={styles.h1}>B2B Medallia Import Monitoring</h1>
       {loading && <div className={styles.loadingSpinner}>Loading...</div>}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
       <div className={styles.tableContainer}>
@@ -73,8 +75,8 @@ export default function Home() {
                 <tr key={data.key}>
                   <td>
                     <div className={styles.dataExtension}>
-                      <div className={styles.bold}>{index + 1}. {data.name}</div>
-                      <div>{data.items.length} Record(s)</div>
+                      <div className={styles.bold}>🏷️ {index + 1}. {data.name}</div>
+                      <div>💿 {data.items.length} Record(s)</div>
                       <div>{renderStatus(data)}</div>
                     </div>
                   </td>

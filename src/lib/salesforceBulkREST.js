@@ -113,3 +113,28 @@ export async function getBulkDataExtensionDetails(deKeys) {
         return null;
     }
 }
+
+
+// adding search page to search for DEs
+
+export async function searchJourneys(query, token) {
+    try {
+        // Fetch journeys based on the query
+        const response = await axios.get(`${REST_BASE_URL}/interaction/v1/interactions`, {
+            params: {
+                $page: 1, // Set the page number as needed
+                $pageSize: 200, // Set the page size as needed
+                extras: 'activities',
+                query: query // You can pass the search query as needed
+            },
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response.data.items;
+    } catch (error) {
+        console.error('Failed to search journeys:', error);
+        return null;
+    }
+}
