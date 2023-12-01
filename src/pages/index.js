@@ -53,7 +53,7 @@ export default function Home() {
     if (invalidURLs > 0) {
       return <span style={{ color: 'red' }}>❌ Invalid URLs Detected</span>;
     }
-    return <span style={{ color: 'green' }}>✅ All URLs Valid</span>;
+    return <span style={{ color: 'green' }}>✅ All URLs valid</span>;
   };
 
   return (
