@@ -1,5 +1,5 @@
 /* Default styles for larger screens */
-@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Open+Sans&family=Roboto&display=swap');
 
 .container {
     display: flex;
@@ -8,7 +8,7 @@
     background-color: #F7F7F9;
     min-height: 100vh;
     padding: 20px;
-    font-family: 'Open Sans', cursive;
+    font-family: 'Roboto', serif;
   }
   
   .h1 {
@@ -25,7 +25,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Open Sans', cursive;
+    font-family: 'Roboto', serif;
   }
   
   .inputContainer {
@@ -39,7 +39,7 @@
     padding: 10px;
     border: 1px solid #CCCCCC;
     border-radius: 5px;
-    font-family: 'Open Sans', cursive;
+    font-family: 'Roboto', serif;
     color: black;
   }
   
@@ -51,7 +51,7 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-family: 'Open Sans', cursive;
+    font-family: 'Roboto', serif;
   }
   
   .searchButton:hover {
@@ -61,7 +61,7 @@
   .loading {
     color: #570580;
     font-weight: bold;
-    font-family: 'Open Sans', cursive;
+    font-family: 'Roboto', serif;
   }
   
   .errorMessage {
@@ -69,7 +69,7 @@
     margin: 10px 0;
     font-weight: bold;
     padding: 12px;
-    font-family: 'Open Sans', cursive;
+    font-family: 'Roboto', serif;
   }
   
   .results {
@@ -115,7 +115,7 @@
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-family: 'Open Sans', cursive;
+  font-family: 'Roboto', serif;
 }
 
 .sortButton:hover {
@@ -130,7 +130,7 @@
   height: 40px;
   animation: spin 2s linear infinite;
   margin: 10px;
-  font-family: 'Open Sans', cursive;
+  font-family: 'Roboto', serif;
   color: #570580; /* Text color (change as needed) */
 }
 
