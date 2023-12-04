@@ -42,8 +42,8 @@
 }
 
 .textDark {
-  color: #570580; /* Match the header color */
-  font-weight: bold; /* Make it bold */
+  color: #570580;
+  font-weight: bold;
   padding: 10px;
 }
 
@@ -54,34 +54,35 @@
 }
 
 .dataSection h2 {
-  font-size: 1.2rem; /* Increase font size */
-  font-weight: bold; /* Make it bold */
-  color: #570580; /* Match the header color */
-  text-align: left; /* Align text to the left */
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #570580;
+  text-align: left;
   margin-bottom: 10px;
-  padding-left: 10px; /* Add left padding */
+  padding-left: 10px;
 }
 
 .h1 {
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 2em;
   font-weight: bold;
-  color: #F7F7F9; /* Update the color to #570580 */
+  color: #F7F7F9;
   margin-bottom: 20px;
   text-align: center;
-  border: 2px solid #570580; /* Match the color to the header color */
+  border: 2px solid #570580;
   padding-bottom: 10px;
   display: inline-block;
-  letter-spacing: 2px; /* Add letter spacing for a modern look */
-  background-color: #570580; /* Add a background color */
-  padding: 10px 20px; /* Add padding to the header */
-  border-radius: 5px; /* Add rounded corners */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  letter-spacing: 2px;
+  background-color: #570580;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dataTable {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Adjust the second value to control spacing */
   overflow-x: auto;
 }
 
@@ -90,6 +91,7 @@
   border: 1px solid #D0D0D2;
   padding: 8px 15px;
   text-align: left;
+  border-radius: 10px;
 }
 
 .dataTable th {
@@ -112,11 +114,11 @@
 }
 
 .pagination button {
-  background-color: #570580; /* Example: Change button background color */
+  background-color: #570580;
   color: #FFFFFF;
-  border-radius: 5px; /* Add rounded corners */
-  padding: 8px 15px; /* Increase padding */
-  margin: 5px; /* Add margin */
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -132,7 +134,7 @@
   width: 40px;
   height: 40px;
   animation: spin 2s linear infinite;
-  margin: 10px; /* Add margin */
+  margin: 10px;
   font-family: 'Open Sans', Arial, sans-serif;
   color: #570580;
 }
@@ -159,27 +161,27 @@
 
   .errorMessage {
     padding: 8px;
-    font-size: 1rem; /* Example: Increase font size */
-    font-weight: bold; /* Make it bold */
-    text-align: left; /* Align text to the left */
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
     font-family: 'Open Sans', Arial, sans-serif;
   }
 
   .textDark {
     padding: 10px;
-    font-size: 1rem; /* Example: Increase font size */
-    font-weight: bold; /* Make it bold */
-    color: #570580; /* Match the header color */
+    font-size: 1rem;
+    font-weight: bold;
+    color: #570580;
     font-family: 'Open Sans', Arial, sans-serif;
   }
 
   .dataSection h2 {
-    font-size: 1.2rem; /* Increase font size */
-    font-weight: bold; /* Make it bold */
-    color: #570580; /* Match the header color */
-    text-align: left; /* Align text to the left */
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #570580;
+    text-align: left;
     margin-bottom: 10px;
-    padding-left: 10px; /* Add left padding */
+    padding-left: 10px;
     font-family: 'Open Sans', Arial, sans-serif;
   }
 
@@ -189,10 +191,10 @@
     padding-bottom: 8px;
   }
 
-  /* Adjust the table for mobile */
   .dataTable {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 10px;
   }
 
   .dataTable th,
@@ -209,18 +211,16 @@
     padding: 5px 8px;
     font-size: 0.9rem;
   }
-  
-  /* Additional mobile styling for the table if needed */
+
   .dataTable th {
     background-color: #FFFFFF;
     color: #570580;
     border: 2px solid #570580;
     text-align: center;
   }
-  
+
   .dataTable td {
     color: #333;
     border: 2px solid #570580;
-    /* Additional mobile styles for table cells */
   }
 }
