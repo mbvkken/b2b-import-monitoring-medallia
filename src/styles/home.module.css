@@ -8,7 +8,7 @@
   background-color: #F7F7F9;
   min-height: 100vh;
   padding: 20px;
-  font-family: 'Open Sans', cursive;
+  font-family: 'Open Sans', Arial, sans-serif;
 }
 
 .bold {
@@ -16,7 +16,7 @@
 }
 
 .body {
-  font-family: 'Open Sans', cursive;
+  font-family: 'Open Sans', Arial, sans-serif;
 }
 
 .fetchButton {
@@ -63,7 +63,7 @@
 }
 
 .h1 {
-  font-family: 'Open Sans', cursive;
+  font-family: 'Open Sans', Arial, sans-serif;
   font-size: 2em;
   font-weight: bold;
   color: #F7F7F9; /* Update the color to #570580 */
@@ -133,7 +133,7 @@
   height: 40px;
   animation: spin 2s linear infinite;
   margin: 10px; /* Add margin */
-  font-family: 'Open Sans', cursive;
+  font-family: 'Open Sans', Arial, sans-serif;
   color: #570580;
 }
 
@@ -162,7 +162,7 @@
     font-size: 1rem; /* Example: Increase font size */
     font-weight: bold; /* Make it bold */
     text-align: left; /* Align text to the left */
-    font-family: 'Open Sans', cursive;
+    font-family: 'Open Sans', Arial, sans-serif;
   }
 
   .textDark {
@@ -170,7 +170,7 @@
     font-size: 1rem; /* Example: Increase font size */
     font-weight: bold; /* Make it bold */
     color: #570580; /* Match the header color */
-    font-family: 'Open Sans', cursive;
+    font-family: 'Open Sans', Arial, sans-serif;
   }
 
   .dataSection h2 {
@@ -180,7 +180,7 @@
     text-align: left; /* Align text to the left */
     margin-bottom: 10px;
     padding-left: 10px; /* Add left padding */
-    font-family: 'Open Sans', cursive;
+    font-family: 'Open Sans', Arial, sans-serif;
   }
 
   .h1 {
