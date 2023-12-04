@@ -1,5 +1,5 @@
 /* components/Header.module.css */
-@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Open+Sans&family=Roboto&display=swap');
 
 .header {
   background-color: #570580;
@@ -9,7 +9,7 @@
   text-align: center;
   margin: 10px;
   width: 100%;
-  font-family: 'Open Sans', cursive;
+  font-family: 'Roboto', serif;
 }
 
 .container {

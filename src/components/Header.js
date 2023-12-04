@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.title}>SFMC Toolbox</div>
+        <div className={styles.title}>Telia SFMC B2B</div>
         <div className={styles.buttonContainer}>
           <Link href="/" className={styles.button}>
             <FaHome /> {/* Replace "Home" with the home icon */}
