@@ -32,7 +32,12 @@ export default function Home() {
           const deKey = dataExtension.key;
           console.log(`Data Extension: ${dataExtension.name}`, dataExtension);
 
-          deData[deKey] = { ...dataExtension, items: dataExtension.items.map(item => item.values) };
+          // Check if 'items' is defined and is an array before mapping
+          if (dataExtension.items && Array.isArray(dataExtension.items)) {
+            deData[deKey] = { ...dataExtension, items: dataExtension.items.map(item => item.values) };
+          } else {
+            deData[deKey] = { ...dataExtension, items: [] }; // Set to an empty array if 'items' is undefined
+          }
         });
 
         console.log('Structured Data Extensions:', deData);
