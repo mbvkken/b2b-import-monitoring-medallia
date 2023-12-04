@@ -8,7 +8,7 @@
   background-color: #F7F7F9;
   min-height: 100vh;
   padding: 20px;
-  font-family: 'Roboto', serif;
+  font-family: 'Open Sans', cursive;
 }
 
 .bold {
@@ -16,7 +16,7 @@
 }
 
 .body {
-  font-family: 'Roboto', serif;
+  font-family: 'Open Sans', cursive;
 }
 
 .fetchButton {
@@ -63,7 +63,7 @@
 }
 
 .h1 {
-  font-family: 'Roboto', serif;
+  font-family: 'Open Sans', cursive;
   font-size: 2em;
   font-weight: bold;
   color: #F7F7F9; /* Update the color to #570580 */
@@ -162,7 +162,7 @@
     font-size: 1rem; /* Example: Increase font size */
     font-weight: bold; /* Make it bold */
     text-align: left; /* Align text to the left */
-    font-family: 'Roboto', serif;
+    font-family: 'Open Sans', cursive;
   }
 
   .textDark {
@@ -170,7 +170,7 @@
     font-size: 1rem; /* Example: Increase font size */
     font-weight: bold; /* Make it bold */
     color: #570580; /* Match the header color */
-    font-family: 'Roboto', serif;
+    font-family: 'Open Sans', cursive;
   }
 
   .dataSection h2 {
@@ -180,7 +180,7 @@
     text-align: left; /* Align text to the left */
     margin-bottom: 10px;
     padding-left: 10px; /* Add left padding */
-    font-family: 'Roboto', serif;
+    font-family: 'Open Sans', cursive;
   }
 
   .h1 {
