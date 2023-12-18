@@ -2,8 +2,10 @@ name: Daily Data Extension Check
 
 on:
   schedule:
-    - cron: '0 15 * * *' # This will run the script daily at 12 PM UTC
-  workflow_dispatch: # This allows you to run the workflow manually
+    - cron: '30 7-19 * * *' # Non-Daylight Saving Time: Runs every hour from 08:30 to 20:30 Norwegian time (UTC+1)
+    # - cron: '30 6-18 * * *' # Daylight Saving Time: Runs every hour from 08:30 to 20:30 Norwegian time (UTC+2)
+  workflow_dispatch:
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
