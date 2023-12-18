@@ -8,15 +8,16 @@
   background-color: #F7F7F9;
   min-height: 100vh;
   padding: 20px;
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
 }
 
 .bold {
   font-weight: bold;
+  color: #000;
 }
 
 .body {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
 }
 
 .fetchButton {
@@ -63,7 +64,7 @@
 }
 
 .h1 {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
   font-size: 2em;
   font-weight: bold;
   color: #F7F7F9;
@@ -135,7 +136,7 @@
   height: 40px;
   animation: spin 2s linear infinite;
   margin: 10px;
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
   color: #570580;
 }
 
@@ -164,7 +165,7 @@
     font-size: 1rem;
     font-weight: bold;
     text-align: left;
-    font-family: 'Open Sans', Arial, sans-serif;
+    font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
   }
 
   .textDark {
@@ -172,7 +173,7 @@
     font-size: 1rem;
     font-weight: bold;
     color: #570580;
-    font-family: 'Open Sans', Arial, sans-serif;
+    font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
   }
 
   .dataSection h2 {
@@ -182,7 +183,7 @@
     text-align: left;
     margin-bottom: 10px;
     padding-left: 10px;
-    font-family: 'Open Sans', Arial, sans-serif;
+    font-family: 'Open Sans', 'Roboto', Arial, sans-serif;
   }
 
   .h1 {
