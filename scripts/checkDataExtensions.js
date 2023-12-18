@@ -43,27 +43,17 @@ async function checkDataExtension(dataExtensionKey) {
     for (const dataExtension of fetchedData) {
       console.log(`Data Extension: ${dataExtension.name}`);
 
-      // Determine the expected record count based on data extension name
-      let expectedRecordCount = 1000; // Default expected record count
-      if (dataExtension.name === 'datacom_I_deliver_survey_url' || dataExtension.name === 'datacom_I_onboard_survey_url') {
-        expectedRecordCount = 50; // Adjusted expected count for specific data extensions
-      }
-
-      // Check the total number of records for the data extension
-      if (dataExtension.items.length < expectedRecordCount) {
-        const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-        const vercelURL = VERCEL_URL;
-        const message = `On the latest import, the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected ${expectedRecordCount} records. This could be correct, but maybe worth checking out? Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be.`;
-        notifySlack(message, dataExtension.name);
+      // Define thresholds for specific data extensions
+      if (dataExtension.name === 'medallia_rnps_end_user_import_url' && dataExtension.items.length < 1000) {
+        sendNotification(dataExtension, 1000);
+      } else if ((dataExtension.name === 'datacom_I_deliver_survey_url' || dataExtension.name === 'datacom_I_onboard_survey_url') && dataExtension.items.length < 50) {
+        sendNotification(dataExtension, 50);
       }
 
       // Check if survey_url is valid for each item in this data extension
       for (const item of dataExtension.items) {
         if (!isValidURL(item.values.survey_url)) {
-          const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
-          const vercelURL = VERCEL_URL;
-          const message = `Invalid URL detected in "${dataExtension.name}". Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be.`;
-          notifySlack(message, dataExtension.name);
+          sendInvalidUrlNotification(dataExtension);
         }
       }
     }
@@ -72,6 +62,19 @@ async function checkDataExtension(dataExtensionKey) {
   }
 }
 
+function sendNotification(dataExtension, expectedRecordCount) {
+  const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
+  const vercelURL = VERCEL_URL;
+  const message = `On the latest import, the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected ${expectedRecordCount} records. This could be correct, but maybe worth checking out? Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be.`;
+  notifySlack(message, dataExtension.name);
+}
+
+function sendInvalidUrlNotification(dataExtension) {
+  const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
+  const vercelURL = VERCEL_URL;
+  const message = `Invalid URL detected in "${dataExtension.name}". Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be.`;
+  notifySlack(message, dataExtension.name);
+}
 
 
 // Loop through the array of DATA_EXTENSION_KEYS and check each data extension
