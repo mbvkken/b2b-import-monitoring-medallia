@@ -43,15 +43,17 @@ async function checkDataExtension(dataExtensionKey) {
     for (const dataExtension of fetchedData) {
       console.log(`Data Extension: ${dataExtension.name}`);
 
-      // Check the total number of records for specific data extensions
-      if (
-        (dataExtension.items.length < 1000 && dataExtension.name === 'medallia_rnps_end_user_import_url') ||
-        (dataExtension.items.length < 1 && dataExtension.name === 'datacom_I_deliver_survey_url') ||
-        (dataExtension.items.length < 1 && dataExtension.name === 'datacom_I_onboard_survey_url')
-      ) {
+      // Determine the expected record count based on data extension name
+      let expectedRecordCount = 1000; // Default expected record count
+      if (dataExtension.name === 'datacom_I_deliver_survey_url' || dataExtension.name === 'datacom_I_onboard_survey_url') {
+        expectedRecordCount = 50; // Adjusted expected count for specific data extensions
+      }
+
+      // Check the total number of records for the data extension
+      if (dataExtension.items.length < expectedRecordCount) {
         const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
         const vercelURL = VERCEL_URL;
-        const message = `On the latest import, the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected 1000 records. This could be correct, but maybe worth checking out? Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be.`;
+        const message = `On the latest import, the Data Extension "${dataExtension.name}" has ${dataExtension.items.length} records which is less than the expected ${expectedRecordCount} records. This could be correct, but maybe worth checking out? Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be.`;
         notifySlack(message, dataExtension.name);
       }
 
@@ -69,6 +71,7 @@ async function checkDataExtension(dataExtensionKey) {
     console.error(`Error occurred while processing Data Extension ${dataExtensionKey}:`, err.message);
   }
 }
+
 
 
 // Loop through the array of DATA_EXTENSION_KEYS and check each data extension
