@@ -46,8 +46,8 @@ async function checkDataExtension(dataExtensionKey) {
       // Define thresholds for specific data extensions
       if (dataExtension.name === 'medallia_rnps_end_user_import_url' && dataExtension.items.length < 1000) {
         sendNotification(dataExtension, 1000);
-      } else if (dataExtension.name === 'medallia_rnps_dm_import_url' && dataExtension.items.length < 140) {
-        sendNotification(dataExtension, 140);
+      } else if (dataExtension.name === 'medallia_rnps_dm_import_url' && dataExtension.items.length < 130) {
+        sendNotification(dataExtension, 130);
       }
 
       // Check if survey_url is valid for each item in this data extension
