@@ -28,6 +28,8 @@
 
 .buttonContainer {
   display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 15px; /* Add space between buttons */
 }
 
 .button {
@@ -36,13 +38,28 @@
   padding: 10px 20px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  margin-right: 10px;
+  min-width: 100px; /* Set a minimum width */
+  display: flex; /* Use flex to center the icon */
+  justify-content: center; /* Center the icon horizontally */
+  align-items: center; /* Center the icon vertically */
 }
 
-.button:last-child {
-  margin-right: 0; /* Remove margin from the last button */
+.button a {
+  color: inherit; /* Ensure the link has the same color as .button */
+  text-decoration: none; /* Remove underline from links */
 }
 
 .button:hover {
   background-color: #4A006A;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .button {
+    padding: 10px;
+    min-width: 80px; /* Smaller min-width for smaller screens */
+  }
+  .buttonContainer {
+    gap: 10px; /* Smaller gap for smaller screens */
+  }
 }
