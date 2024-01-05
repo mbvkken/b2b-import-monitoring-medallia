@@ -5,6 +5,7 @@ const DATA_EXTENSION_KEYS = process.env.MC_DE_KEYS ? process.env.MC_DE_KEYS.spli
 const VERCEL_URL = process.env.VERCEL_SERVER_BASE_URL;
 
 const sentNotifications = new Set(); // Create a Set to store sent notifications
+const invalidUrlNotifications = new Set(); // Create a Set to store sent invalid URL notifications
 
 async function notifySlack(message, dataExtensionName) {
   const notificationKey = `${dataExtensionName}:${message}`;
@@ -51,10 +52,9 @@ async function checkDataExtension(dataExtensionKey) {
       }
 
       // Check if survey_url is valid for each item in this data extension
-      for (const item of dataExtension.items) {
-        if (!isValidURL(item.values.survey_url)) {
-          sendInvalidUrlNotification(dataExtension);
-        }
+      const hasInvalidUrls = dataExtension.items.some(item => !isValidURL(item.values.survey_url));
+      if (hasInvalidUrls) {
+        sendInvalidUrlNotification(dataExtension);
       }
     }
   } catch (err) {
@@ -70,12 +70,19 @@ function sendNotification(dataExtension, expectedRecordCount) {
 }
 
 function sendInvalidUrlNotification(dataExtension) {
+  const notificationKey = `invalid-url:${dataExtension.name}`;
+
+  if (invalidUrlNotifications.has(notificationKey)) {
+    console.log('Invalid URL notification already sent for:', dataExtension.name);
+    return;
+  }
+
   const adminPanelURL = "https://mc.s50.exacttarget.com/cloud/#app/Automation%20Studio/AutomationStudioFuel3/";
   const vercelURL = VERCEL_URL;
   const message = `Invalid URL detected in "${dataExtension.name}". Check status <${vercelURL}|here>. Head over to <${adminPanelURL}|Automation Studio> to fix it if need be.`;
   notifySlack(message, dataExtension.name);
+  invalidUrlNotifications.add(notificationKey);
 }
-
 
 // Loop through the array of DATA_EXTENSION_KEYS and check each data extension
 async function checkDataExtensions(dataExtensionKeys) {

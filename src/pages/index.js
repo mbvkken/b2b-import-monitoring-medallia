@@ -14,52 +14,74 @@ function isValidURL(string) {
 
 export default function Home() {
   const [dataExtensions, setDataExtensions] = useState({});
+  const [automations, setAutomations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchDataExtensions = async () => {
+    const fetchData = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await axios.get('/api/data-extensions');
-        const fetchedData = response.data;
-        console.log('Fetched Data Extensions:', fetchedData);
+        // Fetch Data Extensions
+        const deResponse = await axios.get('/api/data-extensions');
+        const fetchedDEData = deResponse.data;
 
         const deData = {};
-        fetchedData.forEach((dataExtension) => {
+        fetchedDEData.forEach((dataExtension) => {
           const deKey = dataExtension.key;
-          console.log(`Data Extension: ${dataExtension.name}`, dataExtension);
-
-          // Check if 'items' is defined and is an array before mapping
-          if (dataExtension.items && Array.isArray(dataExtension.items)) {
-            deData[deKey] = { ...dataExtension, items: dataExtension.items.map(item => item.values) };
-          } else {
-            deData[deKey] = { ...dataExtension, items: [] }; // Set to an empty array if 'items' is undefined
-          }
+          deData[deKey] = {
+            ...dataExtension,
+            items: dataExtension.items && Array.isArray(dataExtension.items) 
+                   ? dataExtension.items.map(item => item.values) 
+                   : []
+          };
         });
-
-        console.log('Structured Data Extensions:', deData);
         setDataExtensions(deData);
+
+        // Fetch Automations
+        const automationResponse = await axios.get('/api/automations');
+        setAutomations(automationResponse.data);
       } catch (err) {
-        console.error('Failed to fetch data extensions:', err);
-        setError('Failed to fetch data extensions');
+        console.error('Failed to fetch data:', err);
+        setError('Failed to fetch data');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDataExtensions();
+    fetchData();
   }, []);
 
   const renderStatus = (data) => {
     const invalidURLs = data.items.filter(item => !isValidURL(item.survey_url)).length;
-    if (invalidURLs > 0) {
-      return <span style={{ color: 'red' }}>❌ Invalid URLs Detected</span>;
-    }
-    return <span style={{ color: 'green' }}>✅ All URLs valid</span>;
+    return invalidURLs > 0 
+      ? <span style={{ color: 'red' }}>❌ Invalid URLs Detected</span>
+      : <span style={{ color: 'green' }}>✅ All URLs valid</span>;
   };
+
+  const renderAutomations = () => {
+    return automations.map((auto, index) => {
+      // Log the entire automation object for inspection
+      console.log('Automation Object:', auto);
+  
+      // Existing rendering logic...
+      return (
+        <div style={{ color: 'black' }} key={index}>
+          <strong>{auto.name}</strong>
+          <div>Last Run Time: {auto.lastRunTime ? new Date(auto.lastRunTime).toLocaleString() : 'Unknown'}</div>
+          <div>Data Extension Keys: 
+            {auto.targetDataExtensions && auto.targetDataExtensions.length > 0 
+              ? auto.targetDataExtensions.map(de => <span key={de.id}>{de.key}; </span>)
+              : 'None'}
+          </div>
+        </div>
+      );
+    });
+  };
+  
+  
 
   return (
     <div className={styles.container}>
@@ -67,6 +89,7 @@ export default function Home() {
       <h1 className={styles.h1}>B2B Medallia Import Monitoring</h1>
       {loading && <div className={styles.loadingSpinner}>Loading...</div>}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
+      {/* Data Extensions Section */}
       <div className={styles.tableContainer}>
         <table className={styles.dataTable}>
           <thead>
@@ -94,6 +117,11 @@ export default function Home() {
             )}
           </tbody>
         </table>
+      </div>
+      {/* Automations Section */}
+      <div>
+        <h2 style={{ color: 'black', fontSize:'30px' }}>Automations</h2>
+        {renderAutomations()}
       </div>
     </div>
   );

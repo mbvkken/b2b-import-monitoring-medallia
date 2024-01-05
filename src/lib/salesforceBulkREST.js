@@ -103,7 +103,7 @@ export async function getBulkDataExtensionDetails(deKeys) {
             return {
                 key: deKey,
                 name: nameResults[index],
-                items: detailsResults[index] ? detailsResults[index].items : [] // Ensure you have items property in detailsResults
+                items: detailsResults[index] ? detailsResults[index].items : [] 
             };
         });
 
@@ -114,18 +114,64 @@ export async function getBulkDataExtensionDetails(deKeys) {
     }
 }
 
+export async function listAutomations(token) {
+    if (!token) {
+        console.error('Unable to obtain access token');
+        return null;
+    }
 
-// adding search page to search for DEs
+    try {
+        const response = await axios.get(`${REST_BASE_URL}/automation/v1/automations`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            params: {
+                view: 'targetdes',
+                $page: 1,
+                $pageSize: 200, // Include this query parameter
+            }
+        });
+
+        return response.data.items;
+    } catch (error) {
+        console.error('Error fetching automations:', error);
+        return null;
+    }
+}
+
+export async function fetchAutomationDetails(automationId, token) {
+    if (!token) {
+        console.error('Unable to obtain access token');
+        return null;
+    }
+
+    try {
+        const response = await axios.get(`${REST_BASE_URL}/automation/v1/automations/${automationId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            params: {
+                view: 'targetdes',
+                $page: 1,
+                $pageSize: 200, // Include this query parameter
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching automation details for ID', automationId, ':', error);
+        return null;
+    }
+}
 
 export async function searchJourneys(query, token) {
     try {
-        // Fetch journeys based on the query
         const response = await axios.get(`${REST_BASE_URL}/interaction/v1/interactions`, {
             params: {
-                $page: 1, // Set the page number as needed
-                $pageSize: 200, // Set the page size as needed
+                $page: 1,
+                $pageSize: 200,
                 extras: 'activities',
-                query: query // You can pass the search query as needed
+                query: query
             },
             headers: {
                 'Authorization': `Bearer ${token}`
