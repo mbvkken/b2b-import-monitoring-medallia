@@ -42,11 +42,13 @@
   display: flex; /* Use flex to center the icon */
   justify-content: center; /* Center the icon horizontally */
   align-items: center; /* Center the icon vertically */
+  flex-direction: column; /* Stack icon and text vertically */
 }
 
-.button a {
-  color: inherit; /* Ensure the link has the same color as .button */
-  text-decoration: none; /* Remove underline from links */
+.buttonLabel {
+  color: #FFFFFF;
+  font-size: 0.75rem; /* Adjust the font size as needed */
+  margin-top: 5px; /* Space between icon and text */
 }
 
 .button:hover {
@@ -58,6 +60,10 @@
   .button {
     padding: 10px;
     min-width: 80px; /* Smaller min-width for smaller screens */
+    flex-direction: column; /* Ensure vertical stacking on smaller screens */
+  }
+  .buttonLabel {
+    font-size: 0.65rem; /* Slightly smaller font size for smaller screens */
   }
   .buttonContainer {
     gap: 10px; /* Smaller gap for smaller screens */
