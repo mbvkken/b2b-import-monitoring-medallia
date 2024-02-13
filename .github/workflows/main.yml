@@ -14,8 +14,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up Node.js
-      runs: 
-        using: 'node20'
+      uses: actions/setup-node@v4  # Update to a version that supports Node.js 20
       with:
         node-version: '20'  # Specify the desired Node.js version
 
