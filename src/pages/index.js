@@ -85,7 +85,7 @@ export default function Home() {
               ))
             ) : (
               <tr>
-                <td>No Data Extensions Available.</td>
+                <td>No Data Extensions Available</td>
               </tr>
             )}
           </tbody>
