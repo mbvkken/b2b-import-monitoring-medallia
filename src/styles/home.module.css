@@ -140,6 +140,18 @@
   color: #570580;
 }
 
+.sortButton {
+  background-color: #570580;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', 'Open Sans', Arial, sans-serif;
+  margin: 10px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

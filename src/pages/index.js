@@ -14,6 +14,7 @@ function isValidURL(string) {
 
 export default function Home() {
   const [dataExtensions, setDataExtensions] = useState({});
+  const [automationDetails, setAutomationDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -37,7 +38,18 @@ export default function Home() {
                    : []
           };
         });
+
+        //console.log('Data Extensions:', deData); // Log data extensions
+
         setDataExtensions(deData);
+
+        // Fetch and set Automation Details
+        const automationResponse = await axios.get('/api/automations');
+        const fetchedAutomationDetails = automationResponse.data;
+
+        //console.log('Automation Details:', fetchedAutomationDetails); // Log automation details
+
+        setAutomationDetails(fetchedAutomationDetails);
       } catch (err) {
         console.error('Failed to fetch data:', err);
         setError('Failed to fetch data');
@@ -49,11 +61,45 @@ export default function Home() {
     fetchData();
   }, []);
 
+  const getLastRunTime = (data, automationDetail) => {
+    if (Array.isArray(automationDetail)) {
+      const automation = automationDetail.find(automation => {
+        return (
+          automation.steps &&
+          automation.steps.some(step =>
+            step.activities &&
+            step.activities.some(activity =>
+              activity.targetDataExtensions &&
+              activity.targetDataExtensions.some(extension => extension.key === data.key)
+            )
+          )
+        );
+      });
+
+      if (automation) {
+        const rawLastRunTime = new Date(automation.lastRunTime);
+        rawLastRunTime.setHours(rawLastRunTime.getHours() + 8); // Add 8 hours for Norwegian timezone
+        return rawLastRunTime.toLocaleString('no-NO', { timeZone: 'Europe/Oslo' });
+      }
+    }
+
+    return 'N/A';
+  };
+
   const renderStatus = (data) => {
     const invalidURLs = data.items.filter(item => !isValidURL(item.survey_url)).length;
-    return invalidURLs > 0 
-      ? <span style={{ color: 'red' }}>❌ Invalid URLs Detected</span>
-      : <span style={{ color: 'green' }}>✅ All URLs valid</span>;
+    const lastRunTime = getLastRunTime(data, automationDetails);
+
+    return (
+      <div>
+        {invalidURLs > 0 ? (
+          <span style={{ color: 'red' }}>❌ Invalid URLs Detected</span>
+        ) : (
+          <span style={{ color: 'green' }}>✅ All URLs valid</span>
+        )}
+        <div>📅 Last Import: {lastRunTime}</div>
+      </div>
+    );
   };
 
   return (
