@@ -113,7 +113,7 @@ export default function Home() {
         <table className={styles.dataTable}>
           <thead>
             <tr>
-              <th>Data Extensions</th>
+              <th>Data Extension details</th>
             </tr>
           </thead>
           <tbody>
