@@ -17,6 +17,7 @@ export default function Home() {
   const [automationDetails, setAutomationDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [sortByDateAsc, setSortByDateAsc] = useState(true); // For tracking the sort order
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,15 +40,11 @@ export default function Home() {
           };
         });
 
-        //console.log('Data Extensions:', deData); // Log data extensions
-
         setDataExtensions(deData);
 
         // Fetch and set Automation Details
         const automationResponse = await axios.get('/api/automations');
         const fetchedAutomationDetails = automationResponse.data;
-
-        //console.log('Automation Details:', fetchedAutomationDetails); // Log automation details
 
         setAutomationDetails(fetchedAutomationDetails);
       } catch (err) {
@@ -79,11 +76,33 @@ export default function Home() {
       if (automation) {
         const rawLastRunTime = new Date(automation.lastRunTime);
         rawLastRunTime.setHours(rawLastRunTime.getHours() + 8); // Add 8 hours for Norwegian timezone
-        return rawLastRunTime.toLocaleString('no-NO', { timeZone: 'Europe/Oslo' });
+        return rawLastRunTime;
       }
     }
 
-    return 'N/A';
+    return null;
+  };
+
+  const sortDataExtensionsByDate = () => {
+    const sortedDataExtensions = Object.values(dataExtensions).slice().sort((a, b) => {
+      const aLastRunTime = getLastRunTime(a, automationDetails);
+      const bLastRunTime = getLastRunTime(b, automationDetails);
+
+      if (aLastRunTime && bLastRunTime) {
+        return sortByDateAsc 
+          ? aLastRunTime - bLastRunTime 
+          : bLastRunTime - aLastRunTime;
+      }
+      return 0;
+    });
+
+    const sortedDataExtensionsObj = sortedDataExtensions.reduce((acc, de) => {
+      acc[de.key] = de;
+      return acc;
+    }, {});
+
+    setDataExtensions(sortedDataExtensionsObj);
+    setSortByDateAsc(!sortByDateAsc); // Toggle the sort order
   };
 
   const renderStatus = (data) => {
@@ -97,7 +116,7 @@ export default function Home() {
         ) : (
           <span style={{ color: 'green' }}>✅ All URLs valid</span>
         )}
-        <div>📅 Last Import: {lastRunTime}</div>
+        <div>📅 Last Import: {lastRunTime ? lastRunTime.toLocaleString('no-NO', { timeZone: 'Europe/Oslo' }) : 'N/A'}</div>
       </div>
     );
   };
@@ -106,6 +125,9 @@ export default function Home() {
     <div className={styles.container}>
       <Header />
       <h1 className={styles.h1}>B2B Medallia Import Monitoring</h1>
+      <button onClick={sortDataExtensionsByDate} className={styles.sortButton}>
+        {sortByDateAsc ? '⬇️' : '⬆️'}
+      </button>
       {loading && <div className={styles.loadingSpinner}>Loading...</div>}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
       {/* Data Extensions Section */}
