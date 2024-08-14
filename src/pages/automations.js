@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa'; // Import arrow icons
 import styles from '../styles/automations.module.css';
 import Header from '../components/Header';
 
@@ -54,7 +55,12 @@ function Automations() {
     <div className={styles.automationsContainer}>
       <Header />
       <h2 className={styles.automationsHeader}>Automations</h2>
-      <button onClick={sortAutomationsByLastRun} className={styles.sortButton}>Sort by: Last Run Time</button>
+      <button onClick={sortAutomationsByLastRun} className={styles.sortButton}>
+        <span style={{ display: 'flex', alignItems: 'center' }}>
+          Sort by: {isSortedByLastRun ? 'Earliest' : 'Latest'} 
+          {isSortedByLastRun ? <FaArrowUp style={{ marginLeft: '5px' }} /> : <FaArrowDown style={{ marginLeft: '5px' }} />}
+        </span>
+      </button>
       {loading && <div className={styles.loadingSpinner}>Loading...</div>}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
       {!loading && renderAutomations()}

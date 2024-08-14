@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa'; // Import arrow icons
 import styles from '../styles/home.module.css';
 import Header from '../components/Header';
 
@@ -126,7 +127,10 @@ export default function Home() {
       <Header />
       <h1 className={styles.h1}>B2B Medallia Import Monitoring</h1>
       <button onClick={sortDataExtensionsByDate} className={styles.sortButton}>
-        {sortByDateAsc ? '⬇️' : '⬆️'}
+        <span style={{ display: 'flex', alignItems: 'center' }}>
+          Sort by: {sortByDateAsc ? 'Earliest' : 'Latest'} 
+          {sortByDateAsc ? <FaArrowUp style={{ marginLeft: '5px' }} /> : <FaArrowDown style={{ marginLeft: '5px' }} />}
+        </span>
       </button>
       {loading && <div className={styles.loadingSpinner}>Loading...</div>}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
