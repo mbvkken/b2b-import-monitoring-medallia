@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa'; // Import arrow icons
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
 import styles from '../styles/home.module.css';
 import Header from '../components/Header';
 
@@ -18,7 +18,8 @@ export default function Home() {
   const [automationDetails, setAutomationDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [sortByDateAsc, setSortByDateAsc] = useState(true); // For tracking the sort order
+  const [sortByDateAsc, setSortByDateAsc] = useState(true);
+  const [searchTerm, setSearchTerm] = useState(''); // State for the search term
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +27,6 @@ export default function Home() {
       setError(null);
 
       try {
-        // Fetch Data Extensions
         const deResponse = await axios.get('/api/data-extensions');
         const fetchedDEData = deResponse.data;
 
@@ -43,7 +43,6 @@ export default function Home() {
 
         setDataExtensions(deData);
 
-        // Fetch and set Automation Details
         const automationResponse = await axios.get('/api/automations');
         const fetchedAutomationDetails = automationResponse.data;
 
@@ -103,8 +102,16 @@ export default function Home() {
     }, {});
 
     setDataExtensions(sortedDataExtensionsObj);
-    setSortByDateAsc(!sortByDateAsc); // Toggle the sort order
+    setSortByDateAsc(!sortByDateAsc);
   };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredDataExtensions = Object.values(dataExtensions).filter(de => 
+    de.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const renderStatus = (data) => {
     const invalidURLs = data.items.filter(item => !isValidURL(item.survey_url)).length;
@@ -125,16 +132,28 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Header />
-      <h1 className={styles.h1}>B2B Medallia Import Monitoring</h1>
-      <button onClick={sortDataExtensionsByDate} className={styles.sortButton}>
-        <span style={{ display: 'flex', alignItems: 'center' }}>
-          Sort by: {sortByDateAsc ? 'Earliest' : 'Latest'} 
-          {sortByDateAsc ? <FaArrowUp style={{ marginLeft: '5px' }} /> : <FaArrowDown style={{ marginLeft: '5px' }} />}
-        </span>
-      </button>
+      <h1 className={styles.h1}>B2B Medallia Data Extensions Monitoring</h1>
+
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search Data Extensions..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className={styles.searchInput}
+        />
+        <button onClick={sortDataExtensionsByDate} className={styles.sortButton}>
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            Sort by: {sortByDateAsc ? 'Earliest' : 'Latest'} 
+            {sortByDateAsc ? <FaArrowUp style={{ marginLeft: '5px' }} /> : <FaArrowDown style={{ marginLeft: '5px' }} />}
+          </span>
+        </button>
+      </div>
+
+
       {loading && <div className={styles.loadingSpinner}>Loading...</div>}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
-      {/* Data Extensions Section */}
+      
       <div className={styles.tableContainer}>
         <table className={styles.dataTable}>
           <thead>
@@ -143,8 +162,8 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {Object.values(dataExtensions).length > 0 ? (
-              Object.values(dataExtensions).map((data, index) => (
+            {filteredDataExtensions.length > 0 ? (
+              filteredDataExtensions.map((data, index) => (
                 <tr key={data.key}>
                   <td>
                     <div className={styles.dataExtension}>

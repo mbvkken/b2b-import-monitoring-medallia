@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa'; // Import arrow icons
 import styles from '../styles/search.module.css';
 import axios from 'axios';
 import Header from '../components/Header';
@@ -71,11 +72,17 @@ const Search = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchInput}
         />
-        <button className={styles.searchButton}>Search</button>
       </div>
       <div className={styles.sortButtonContainer}>
         <button onClick={toggleSortOrder} className={styles.sortButton}>
-          Sort by Created Date: {sortByCreatedDate ? 'Latest' : 'Earliest'}
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            Sort by Created Date: {sortByCreatedDate ? 'Latest' : 'Earliest'}
+            {sortByCreatedDate ? (
+              <FaArrowDown style={{ marginLeft: '5px' }} />
+            ) : (
+              <FaArrowUp style={{ marginLeft: '5px' }} />
+            )}
+          </span>
         </button>
       </div>
       {loading && (

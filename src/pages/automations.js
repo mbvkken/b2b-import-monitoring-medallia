@@ -9,6 +9,7 @@ function Automations() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSortedByLastRun, setIsSortedByLastRun] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(''); // State to track the search term
 
   useEffect(() => {
     const fetchAutomations = async () => {
@@ -37,8 +38,16 @@ function Automations() {
     setAutomations(sortedAutomations);
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredAutomations = automations.filter(auto =>
+    auto.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const renderAutomations = () => {
-    return automations.map((auto, index) => (
+    return filteredAutomations.map((auto, index) => (
       <div key={index} className={styles.automationItem}>
         <strong className={styles.automationName}>{auto.name}</strong>
         <div className={styles.automationDetail}>Last Run Time: {auto.lastRunTime ? new Date(auto.lastRunTime).toLocaleString() : 'Unknown'}</div>
@@ -54,13 +63,24 @@ function Automations() {
   return (
     <div className={styles.automationsContainer}>
       <Header />
-      <h2 className={styles.automationsHeader}>Automations</h2>
-      <button onClick={sortAutomationsByLastRun} className={styles.sortButton}>
-        <span style={{ display: 'flex', alignItems: 'center' }}>
-          Sort by: {isSortedByLastRun ? 'Earliest' : 'Latest'} 
-          {isSortedByLastRun ? <FaArrowUp style={{ marginLeft: '5px' }} /> : <FaArrowDown style={{ marginLeft: '5px' }} />}
-        </span>
-      </button>
+      <h2 className={styles.automationsHeader}>B2B SFMC Automations</h2>
+
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search Automations..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className={styles.searchInput}
+        />
+        <button onClick={sortAutomationsByLastRun} className={styles.sortButton}>
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            Sort by: {isSortedByLastRun ? 'Earliest' : 'Latest'} 
+            {isSortedByLastRun ? <FaArrowUp style={{ marginLeft: '5px' }} /> : <FaArrowDown style={{ marginLeft: '5px' }} />}
+          </span>
+        </button>
+      </div>
+
       {loading && <div className={styles.loadingSpinner}>Loading...</div>}
       {error && <p className={styles.errorMessage}>Error: {error}</p>}
       {!loading && renderAutomations()}
