@@ -49,9 +49,9 @@ function Automations() {
   const renderAutomations = () => {
     return filteredAutomations.map((auto, index) => (
       <div key={index} className={styles.automationItem}>
-        <strong className={styles.automationName}>{auto.name}</strong>
-        <div className={styles.automationDetail}>Last Run Time: {auto.lastRunTime ? new Date(auto.lastRunTime).toLocaleString() : 'Unknown'}</div>
-        <div className={styles.automationDetail}>Data Extension Keys: 
+        <strong className={styles.automationName}>⚙️ {auto.name}</strong>
+        <div className={styles.automationDetail}>📅 Last Run Time: {auto.lastRunTime ? new Date(auto.lastRunTime).toLocaleString() : 'Unknown'}</div>
+        <div className={styles.automationDetail}>🔑 Data Extension Keys: 
           {auto.targetDataExtensions && auto.targetDataExtensions.length > 0 
             ? auto.targetDataExtensions.map(de => <span key={de.id} className={styles.dataExtensionKey}>{de.key}; </span>)
             : 'None'}

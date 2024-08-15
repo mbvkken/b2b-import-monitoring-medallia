@@ -67,7 +67,7 @@ const Search = () => {
       <div className={styles.inputContainer}>
         <input
           type="text"
-          placeholder="Search Journeys"
+          placeholder="Search Journeys..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchInput}
